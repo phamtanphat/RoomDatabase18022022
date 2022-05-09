@@ -15,6 +15,12 @@ import com.example.roomdatabase18022022.presentation.viewmodels.MainViewModel;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.CompletableObserver;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class MainActivity extends AppCompatActivity {
 
     MainViewModel mainViewModel;
@@ -31,12 +37,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }).get(MainViewModel.class);
 
-        mainViewModel.getListNotes().observe(this, new Observer<List<NoteWord>>() {
+        mainViewModel.getNotesList().observe(this, new Observer<List<NoteWord>>() {
             @Override
             public void onChanged(List<NoteWord> noteWords) {
-                Log.d("BBB",noteWords.size() + "");
+                for (int i = 0; i < noteWords.size(); i++) {
+                    Log.d("BBB",noteWords.get(i).toString());
+                }
             }
         });
 
+        mainViewModel.queryNotesList();
+        mainViewModel.insertNote(new NoteWord("Work 2" , "Do something 2"));
     }
+
 }

@@ -10,6 +10,9 @@ import com.example.roomdatabase18022022.data.local.entities.NoteWord;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
+
 public class NoteRepository {
     private NoteDao noteDao;
 
@@ -17,7 +20,11 @@ public class NoteRepository {
         noteDao = DatabaseManager.getDatabase(application).getNoteDao();
     }
 
-    public LiveData<List<NoteWord>> getListNotes(){
+    public Observable<List<NoteWord>> getListNotes(){
         return noteDao.getListNote();
+    }
+
+    public Completable insertNote(NoteWord noteWord){
+        return noteDao.insertNote(noteWord);
     }
 }
